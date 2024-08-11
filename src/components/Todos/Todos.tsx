@@ -34,7 +34,7 @@ function Todos() {
       <ItemsFilter changeFilter={changeFilter} />
       <List>
         {filteredItems.map(({ id, name, active }) => (
-          <Item key={id} id={id} name={name} active={active} onClick={onClickItem} />
+          <Item key={id} id={id} name={name} active={active} onClickItem={onClickItem} />
         ))}
       </List>
     </div>

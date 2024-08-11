@@ -6,20 +6,15 @@ import AddingItems from '../AddItems/AddingItems';
 import Item from '../Item/Item';
 import './styles.scss';
 
-const itemsMock = [
-  { id: 1, name: 'ddddd', active: true },
-  { id: 2, name: '1xfseds', active: false },
-];
-
 function Todos() {
-  const [items, setItems] = useState<IItem[]>(itemsMock);
+  const [items, setItems] = useState<IItem[]>([]);
 
   const onClickItem = useCallback((id: number) => {
     setItems(prevItems => prevItems.map(item => (item.id === id ? { ...item, active: !item.active } : item)));
   }, []);
 
   const onAddNewItem = (newItemName: string) => {
-    setItems(prevItems => [{ id: 197, name: newItemName, active: true }, ...prevItems]);
+    setItems(prevItems => [{ id: Date.now(), name: newItemName, active: true }, ...prevItems]);
   };
 
   return (

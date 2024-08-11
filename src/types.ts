@@ -3,3 +3,9 @@ export interface IItem {
   name: string;
   active: boolean;
 }
+
+export enum Filters {
+  all = 'All',
+  active = 'Active',
+  complete = 'Complete',
+}

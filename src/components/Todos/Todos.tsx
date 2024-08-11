@@ -1,13 +1,14 @@
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { List } from 'antd';
-import { useState } from 'react';
-import { IItem } from '../../types';
+import { IItem, Filters } from '../../types';
 import AddingItems from '../AddItems/AddingItems';
 import Item from '../Item/Item';
+import ItemsFilter from '../ItemsFilter/ItemsFilter';
 import './styles.scss';
 
 function Todos() {
   const [items, setItems] = useState<IItem[]>([]);
+  const [filter, setFilter] = useState<Filters>(Filters.all);
 
   const onClickItem = useCallback((id: number) => {
     setItems(prevItems => prevItems.map(item => (item.id === id ? { ...item, active: !item.active } : item)));
@@ -17,12 +18,22 @@ function Todos() {
     setItems(prevItems => [{ id: Date.now(), name: newItemName, active: true }, ...prevItems]);
   };
 
+  const changeFilter = (newFilter: Filters) => {
+    setFilter(newFilter);
+  };
+
+  const filteredItems =
+    filter === Filters.all
+      ? items
+      : items.filter(({ active }) => (filter === Filters.active && active) || (filter === Filters.complete && !active));
+
   return (
     <div className='todos'>
       <h1> todos </h1>
       <AddingItems onAddNewItem={onAddNewItem} />
+      <ItemsFilter changeFilter={changeFilter} />
       <List>
-        {items.map(({ id, name, active }) => (
+        {filteredItems.map(({ id, name, active }) => (
           <Item key={id} id={id} name={name} active={active} onClick={onClickItem} />
         ))}
       </List>

@@ -22,6 +22,10 @@ function Todos() {
     setFilter(newFilter);
   };
 
+  const onDeleteItem = (itemId: number) => {
+    setItems(prevItems => prevItems.filter(({ id }) => itemId !== id));
+  };
+
   const filteredItems =
     filter === Filters.all
       ? items
@@ -34,7 +38,10 @@ function Todos() {
       <ItemsFilter changeFilter={changeFilter} />
       <List>
         {filteredItems.map(({ id, name, active }) => (
-          <Item key={id} id={id} name={name} active={active} onClickItem={onClickItem} />
+          <Item
+            key={id}
+            itemProps={{ id: id, name: name, active: active, onClickItem: onClickItem, onDeleteItem: onDeleteItem }}
+          />
         ))}
       </List>
     </div>

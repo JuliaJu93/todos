@@ -1,17 +1,31 @@
 .item {
   display: flex;
-  cursor: pointer;
-  padding: 5px;
-  border: solid 1px lightgray;
-  border-radius: 3px;
-  margin-bottom: 1px;
+  flex-direction: row;
+  width: 100%;
+  gap: 5px;
 
-  &:hover {
-    background-color: #EBE9E9;
+  .item_content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    cursor: pointer;
+    padding: 5px;
+    border: solid 1px lightgray;
+    border-radius: 3px;
+    margin-bottom: 5px;
+
+    &:hover {
+      background-color: #ebe9e9;
+    }
   }
-}
 
-.item_notActive {
-  color: darkgray;
-  text-decoration: line-through;
+  .item_notActive {
+    color: darkgray;
+    text-decoration: line-through;
+  }
+
+  .ant-btn  {
+    width: 35px;
+  }
 }

@@ -1,0 +1,17 @@
+.item {
+  display: flex;
+  cursor: pointer;
+  padding: 5px;
+  border: solid 1px lightgray;
+  border-radius: 3px;
+  margin-bottom: 1px;
+
+  &:hover {
+    background-color: #EBE9E9;
+  }
+}
+
+.item_notActive {
+  color: darkgray;
+  text-decoration: line-through;
+}

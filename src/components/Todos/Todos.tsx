@@ -18,10 +18,14 @@ function Todos() {
     setItems(prevItems => prevItems.map(item => (item.id === id ? { ...item, active: !item.active } : item)));
   }, []);
 
+  const onAddNewItem = (newItemName: string) => {
+    setItems(prevItems => [{ id: 197, name: newItemName, active: true }, ...prevItems]);
+  };
+
   return (
     <div className='todos'>
       <h1> todos </h1>
-      <AddingItems />
+      <AddingItems onAddNewItem={onAddNewItem} />
       <List>
         {items.map(({ id, name, active }) => (
           <Item key={id} id={id} name={name} active={active} onClick={onClickItem} />

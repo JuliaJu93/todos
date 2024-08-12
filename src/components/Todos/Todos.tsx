@@ -31,13 +31,21 @@ function Todos() {
       ? items
       : items.filter(({ active }) => (filter === Filters.active && active) || (filter === Filters.complete && !active));
 
+  const sortedItems = filteredItems.sort((a, b) => {
+    if (a.active && !b.active) {
+      return -1;
+    } else if (!a.active && b.active) {
+      return 1;
+    }
+  });
+
   return (
     <div className='todos'>
       <h1> todos </h1>
       <AddingItems onAddNewItem={onAddNewItem} />
       <ItemsFilter changeFilter={changeFilter} />
       <List>
-        {filteredItems.map(({ id, name, active }) => (
+        {sortedItems.map(({ id, name, active }) => (
           <Item key={id} id={id} name={name} active={active} onClickItem={onClickItem} onDeleteItem={onDeleteItem} />
         ))}
       </List>

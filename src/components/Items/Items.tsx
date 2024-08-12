@@ -29,18 +29,20 @@ function Items({ items, setItems }: IItemsProps) {
       ? items
       : items.filter(({ active }) => (filter === Filters.active && active) || (filter === Filters.complete && !active));
 
-  const sortedItems = filteredItems.sort((a, b) => {
+  const sortedItems = filteredItems.sort((a: IItem, b: IItem) => {
     if (a.active && !b.active) {
       return -1;
     } else if (!a.active && b.active) {
       return 1;
     }
+
+    return 0;
   });
 
   return (
     <div>
       <ItemsFilter filter={filter} changeFilter={onChangeFilter} />
-      <List>
+      <List data-testid='items'>
         {sortedItems.map(({ id, name, active }) => (
           <Item key={id} id={id} name={name} active={active} onClickItem={onClickItem} onDeleteItem={onDeleteItem} />
         ))}

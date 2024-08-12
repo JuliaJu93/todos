@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { IItem } from '../../types';
-import AddingItems from '../AddItems/AddingItems';
+import AddItemsForm from '../AddItemsForm/AddItemsForm';
 import Items from '../Items/Items';
 import './styles.scss';
 
@@ -14,7 +14,7 @@ function Todos() {
   return (
     <div className='todos'>
       <h1> todos </h1>
-      <AddingItems onAddNewItem={onAddNewItem} />
+      <AddItemsForm onAddNewItem={onAddNewItem} />
       <Items items={items} setItems={setItems} />
     </div>
   );

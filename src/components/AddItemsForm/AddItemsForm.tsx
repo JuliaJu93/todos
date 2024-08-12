@@ -11,13 +11,13 @@ const { Item } = Form;
 function AddItemsForm({ onAddNewItem }: IAddingItemsProps) {
   const [form] = Form.useForm();
 
-  const onClickInputBtnHandler = ({ newItem }: { newItem: string }) => {
+  const onSubmit = ({ newItem }: { newItem: string }) => {
     onAddNewItem(newItem);
     form.resetFields();
   };
 
   return (
-    <Form form={form} className='addItemsForm' onFinish={onClickInputBtnHandler}>
+    <Form form={form} className='addItemsForm' onFinish={onSubmit}>
       <Item name='newItem'>
         <Input />
       </Item>

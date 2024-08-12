@@ -10,8 +10,6 @@ interface IItemProps extends IItem {
 }
 
 function Item({ id, name, active, onClickItem, onDeleteItem }: IItemProps) {
-  const notActive = active ? '' : 'item_notActive';
-
   const onClickItemHandler = () => {
     onClickItem(id);
   };
@@ -20,9 +18,11 @@ function Item({ id, name, active, onClickItem, onDeleteItem }: IItemProps) {
     onDeleteItem(id);
   };
 
+  const notActiveClassName = active ? '' : 'item_notActive';
+
   return (
     <div className='item'>
-      <div className={`item_content ${notActive}`} onClick={onClickItemHandler}>
+      <div className={`item_content ${notActiveClassName}`} onClick={onClickItemHandler}>
         {name}
       </div>
       <Button danger icon={<DeleteOutlined />} onClick={onClickDeleteBtnHandler} />

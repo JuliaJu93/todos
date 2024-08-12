@@ -4,14 +4,14 @@ import './styles.scss';
 
 interface IItemsFilterProps {
   filter: Filters;
-  changeFilter: (newFilter: Filters) => void;
+  onChangeFilter: (newFilter: Filters) => void;
 }
 
 const { Group } = Radio;
 
-function ItemsFilter({ filter, changeFilter }: IItemsFilterProps) {
+function ItemsFilter({ filter, onChangeFilter }: IItemsFilterProps) {
   const onChangeRadioGroup = ({ target: { value } }: RadioChangeEvent) => {
-    changeFilter(value as Filters);
+    onChangeFilter(value as Filters);
   };
 
   return (

@@ -1,34 +1,30 @@
-import { ChangeEvent, useState } from 'react';
-import { Button, Input } from 'antd';
+import { Form, Button, Input } from 'antd';
+import { PlusCircleOutlined } from '@ant-design/icons';
 import './styles.scss';
 
 interface IAddingItemsProps {
   onAddNewItem: (newItemName: string) => void;
 }
 
+const { Item } = Form;
+
 function AddingItems({ onAddNewItem }: IAddingItemsProps) {
-  const [newItem, setNewItem] = useState('');
+  const [form] = Form.useForm();
 
-  const onChangeInput = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
-    setNewItem(value);
-  };
-
-  const onClearInput = () => {
-    setNewItem('');
-  };
-
-  const onClickInputBtn = () => {
+  const onClickInputBtnHandler = ({ newItem }: string) => {
     onAddNewItem(newItem);
-    onClearInput();
+    form.resetFields();
   };
 
   return (
-    <div className='addingItems'>
-      <Input onChange={onChangeInput} value={newItem} />
-      <Button type='primary' disabled={!newItem} onClick={onClickInputBtn}>
+    <Form form={form} className='addingItems' onFinish={onClickInputBtnHandler}>
+      <Item name='newItem'>
+        <Input />
+      </Item>
+      <Button htmlType='submit' type='primary' icon={<PlusCircleOutlined />} iconPosition='end'>
         Add
       </Button>
-    </div>
+    </Form>
   );
 }
 

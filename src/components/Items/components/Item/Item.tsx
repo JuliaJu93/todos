@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { Button } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
-import { IItem } from '../../types';
+import { IItem } from '../../../../types';
 import './styles.scss';
 
 interface IItemProps extends IItem {
@@ -16,7 +16,7 @@ function Item({ id, name, active, onClickItem, onDeleteItem }: IItemProps) {
     onClickItem(id);
   };
 
-  const onClickDeleteBtn = () => {
+  const onClickDeleteBtnHandler = () => {
     onDeleteItem(id);
   };
 
@@ -25,7 +25,7 @@ function Item({ id, name, active, onClickItem, onDeleteItem }: IItemProps) {
       <div className={`item_content ${notActive}`} onClick={onClickItemHandler}>
         {name}
       </div>
-      <Button danger icon={<DeleteOutlined />} onClick={onClickDeleteBtn} />
+      <Button danger icon={<DeleteOutlined />} onClick={onClickDeleteBtnHandler} />
     </div>
   );
 }

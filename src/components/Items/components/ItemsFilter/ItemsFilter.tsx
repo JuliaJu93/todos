@@ -1,21 +1,22 @@
-import { Radio } from 'antd';
 import { ChangeEvent } from 'react';
-import { IItem, Filters } from '../../types';
+import { Radio } from 'antd';
+import { Filters } from '../../../../types';
 import './styles.scss';
 
-interface IItemsFilterProps extends IItem {
+interface IItemsFilterProps {
+  filter: Filters;
   changeFilter: (newFilter: string) => void;
 }
 
 const { Group } = Radio;
 
-function ItemsFilter({ changeFilter }: IItemsFilterProps) {
+function ItemsFilter({ filter, changeFilter }: IItemsFilterProps) {
   const onChangeRadioGroup = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
     changeFilter(value);
   };
 
   return (
-    <Group className='itemsFilter' defaultValue={Filters.all} onChange={onChangeRadioGroup}>
+    <Group className='itemsFilter' value={filter} onChange={onChangeRadioGroup}>
       <Radio value={Filters.all}>{Filters.all}</Radio>
       <Radio value={Filters.active}>{Filters.active}</Radio>
       <Radio value={Filters.complete}>{Filters.complete}</Radio>

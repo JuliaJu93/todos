@@ -9,11 +9,13 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
+    max-width: 300px;
     cursor: pointer;
     padding: 5px;
     border: solid 1px lightgray;
     border-radius: 3px;
     margin-bottom: 5px;
+    word-break: break-all;
 
     &:hover {
       background-color: #ebe9e9;
@@ -25,7 +27,7 @@
     text-decoration: line-through;
   }
 
-  .ant-btn  {
+  .ant-btn {
     width: 35px;
   }
 }

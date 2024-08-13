@@ -8,6 +8,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint vite-project",
     "preview": "vite preview",
+    "format": "prettier -w ./src",
     "test": "jest"
   },
   "dependencies": {

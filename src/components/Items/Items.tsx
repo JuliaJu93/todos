@@ -39,7 +39,9 @@ function Items({ items, setItems }: IItemsProps) {
       ? items
       : items.filter(({ active }) => (filter === Filters.active && active) || (filter === Filters.complete && !active));
 
-  const sortedItems = filteredItems.sort((a: IItem, b: IItem) => {return activeItemsFirst(a.active, b.active)});
+  const sortedItems = filteredItems.sort((a: IItem, b: IItem) => {
+    return activeItemsFirst(a.active, b.active);
+  });
 
   return (
     <div>

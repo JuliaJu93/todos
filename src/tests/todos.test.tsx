@@ -166,4 +166,4 @@ describe('filters', () => {
       expect(notActiveItem).toBeNull();
     });
   });
-})
+});

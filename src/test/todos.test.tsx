@@ -1,7 +1,6 @@
 import { render, fireEvent, screen, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Todos from '../components/Todos/Todos';
-import Items from '../components/Items/Items';
 import './matchMediaMock';
 
 function createNewItem(baseElement: HTMLElement, text: string) {
@@ -10,6 +9,11 @@ function createNewItem(baseElement: HTMLElement, text: string) {
 
   const submitBtn = baseElement.querySelector('button');
   submitBtn && fireEvent.click(submitBtn);
+}
+
+function completedItem(text: string) {
+  const newItem = screen.queryByText(text);
+  newItem && fireEvent.click(newItem);
 }
 
 describe('todos component', () => {
@@ -43,8 +47,8 @@ describe('todos component', () => {
     submitBtn && fireEvent.click(submitBtn);
 
     await waitFor(async () => {
-      const newItemText = screen.queryByText(NEW_ITEM_TEXT);
-      expect(newItemText).not.toBeNull();
+      const newItem = screen.queryByText(NEW_ITEM_TEXT);
+      expect(newItem).not.toBeNull();
     });
   });
 
@@ -80,22 +84,86 @@ describe('todos component', () => {
     createNewItem(baseElement, NEW_ITEM_TEXT);
 
     await waitFor(async () => {
-      const newItemText = screen.queryByText(NEW_ITEM_TEXT);
-      expect(newItemText).toBeNull();
+      const newItem = screen.queryByText(NEW_ITEM_TEXT);
+      expect(newItem).toBeNull();
+    });
+  });
+
+  it('Transition of an item to a completed state', async () => {
+    const { baseElement } = render(<Todos />);
+
+    const NEW_ITEM_TEXT = 'test';
+    createNewItem(baseElement, NEW_ITEM_TEXT);
+
+    await waitFor(async () => {
+      completedItem(NEW_ITEM_TEXT);
+      const notActiveNewItem = baseElement.querySelector('.item_notActive');
+      expect(notActiveNewItem).toBeDefined();
     });
   });
 });
 
-// describe('items component', () => {
-//   it('Transition of an item to a completed state', async () => {
-//     const { baseElement } = render(<Items />);
-//
-//     const NEW_ITEM_TEXT = 'test';
-//     createNewItem(baseElement, NEW_ITEM_TEXT);
-//
-//     await waitFor(async () => {
-//       const newItemText = screen.queryByText(NEW_ITEM_TEXT);
-//       expect(newItemText).not.toBeNull();
-//     });
-//   });
-// });
+describe('filters', () => {
+  it('Working all filters', async () => {
+    const { baseElement } = render(<Todos />);
+
+    const NEW_ITEM_TEXT1 = 'test1';
+    createNewItem(baseElement, NEW_ITEM_TEXT1);
+
+    const NEW_ITEM_TEXT2 = 'test2';
+    createNewItem(baseElement, NEW_ITEM_TEXT2);
+
+    await waitFor(async () => {
+      completedItem(NEW_ITEM_TEXT1);
+
+      const activeItem = baseElement.querySelector('.item_active');
+      expect(activeItem).toBeDefined();
+      const notActiveItem = baseElement.querySelector('.item_notActive');
+      expect(notActiveItem).toBeDefined();
+    });
+  });
+
+  it('Working complete filters', async () => {
+    const { baseElement } = render(<Todos />);
+
+    const NEW_ITEM_TEXT1 = 'test1';
+    createNewItem(baseElement, NEW_ITEM_TEXT1);
+
+    const NEW_ITEM_TEXT2 = 'test2';
+    createNewItem(baseElement, NEW_ITEM_TEXT2);
+
+    await waitFor(async () => {
+      completedItem(NEW_ITEM_TEXT1);
+
+      const radioInputCompleted = screen.getByRole('radio', { name: 'Complete' });
+      radioInputCompleted && fireEvent.change(radioInputCompleted);
+
+      const activeItem = baseElement.querySelector('.item_active');
+      expect(activeItem).toBeNull();
+      const notActiveItem = baseElement.querySelector('.item_notActive');
+      expect(notActiveItem).toBeDefined();
+    });
+  });
+
+  it('Working active filters', async () => {
+    const { baseElement } = render(<Todos />);
+
+    const NEW_ITEM_TEXT1 = 'test1';
+    createNewItem(baseElement, NEW_ITEM_TEXT1);
+
+    const NEW_ITEM_TEXT2 = 'test2';
+    createNewItem(baseElement, NEW_ITEM_TEXT2);
+
+    await waitFor(async () => {
+      completedItem(NEW_ITEM_TEXT1);
+
+      const radioInputCompleted = screen.getByRole('radio', { name: 'Active' });
+      radioInputCompleted && fireEvent.change(radioInputCompleted);
+
+      const activeItem = baseElement.querySelector('.item_active');
+      expect(activeItem).toBeDefined();
+      const notActiveItem = baseElement.querySelector('.item_notActive');
+      expect(notActiveItem).toBeNull();
+    });
+  });
+})

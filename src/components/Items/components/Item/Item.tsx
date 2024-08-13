@@ -18,7 +18,7 @@ function Item({ id, name, active, onClickItem, onDeleteItem }: IItemProps) {
     onDeleteItem(id);
   };
 
-  const notActiveClassName = active ? '' : 'item_notActive';
+  const notActiveClassName = active ? 'item_active' : 'item_notActive';
 
   return (
     <div className='item'>

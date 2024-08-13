@@ -12,14 +12,16 @@ function AddItemsForm({ onAddNewItem }: IAddingItemsProps) {
   const [form] = Form.useForm();
 
   const onSubmit = ({ newItem }: { newItem: string }) => {
-    onAddNewItem(newItem);
-    form.resetFields();
+    if (newItem && newItem.trim()) {
+      onAddNewItem(newItem);
+      form.resetFields();
+    }
   };
 
   return (
     <Form form={form} className='addItemsForm' onFinish={onSubmit}>
       <Item name='newItem'>
-        <Input />
+        <Input type='text' />
       </Item>
       <Button htmlType='submit' type='primary' icon={<PlusCircleOutlined />} iconPosition='end'>
         Add

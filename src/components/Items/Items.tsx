@@ -16,7 +16,7 @@ function activeItemsFirst(a: boolean, b: boolean) {
 
 interface IItemsProps {
   items: IItem[];
-  setItems: Dispatch<SetStateAction<IItem[]>>;
+  setItems: (cb: (prevItems: IItem[]) => IItem[]) => void;
 }
 
 function Items({ items, setItems }: IItemsProps) {

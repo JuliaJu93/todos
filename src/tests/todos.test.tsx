@@ -67,13 +67,16 @@ describe('todos component', () => {
   it('No adding an empty items', async () => {
     const { baseElement } = render(<Todos />);
 
+    const initItems = screen.getByTestId('items');
+    const buttonsInInitItems = initItems.querySelectorAll('button');
+
     const NEW_ITEM_TEXT = '';
     createNewItem(baseElement, NEW_ITEM_TEXT);
 
     await waitFor(async () => {
       const items = screen.getByTestId('items');
-      const buttonsInItems = items.querySelector('button');
-      expect(buttonsInItems).toBeNull();
+      const buttonsInItems = items.querySelectorAll('button');
+      expect(buttonsInItems.length).toBe(buttonsInInitItems.length);
     });
   });
 
@@ -136,7 +139,7 @@ describe('filters', () => {
       completedItem(NEW_ITEM_TEXT1);
 
       const radioInputCompleted = screen.getByRole('radio', { name: 'Complete' });
-      radioInputCompleted && fireEvent.change(radioInputCompleted);
+      radioInputCompleted && fireEvent.click(radioInputCompleted);
 
       const activeItem = baseElement.querySelector('.item_active');
       expect(activeItem).toBeNull();
@@ -158,7 +161,7 @@ describe('filters', () => {
       completedItem(NEW_ITEM_TEXT1);
 
       const radioInputCompleted = screen.getByRole('radio', { name: 'Active' });
-      radioInputCompleted && fireEvent.change(radioInputCompleted);
+      radioInputCompleted && fireEvent.click(radioInputCompleted);
 
       const activeItem = baseElement.querySelector('.item_active');
       expect(activeItem).toBeDefined();
